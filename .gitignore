@@ -1,0 +1,28 @@
+# 대회 제공 데이터 (절대 커밋 금지)
+train.csv
+test.csv
+trackman_history.csv
+sample_submission.csv
+*.csv.zip
+data/
+
+# 대회 baseline (읽기 전용 원본, 저장소에 포함하지 않음)
+baseline_submit/
+
+# 학습된 모델 바이너리 (용량 크고 재현 가능 - 코드로 재생성)
+*.pkl
+*.cbm
+*.npz
+*.joblib
+
+# 학습 산출물 로그
+catboost_info/
+__pycache__/
+*.pyc
+
+# 대용량 결과물 zip
+*.zip
+
+# OS/편집기
+.DS_Store
+.vscode/
