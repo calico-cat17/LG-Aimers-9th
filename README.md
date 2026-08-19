@@ -91,5 +91,6 @@ MyDrive/LG_AIMERS/joa_r_residual_final/submit_JOA_R_residual_multiseed005.zip
 
 ## 이번 JM 브랜치의 범위
 
-이번 브랜치에는 위 R residual 개선 실험을 설명하는 README와 실제 Colab 실행 노트북만 추가합니다. 다른 실험용 `.py`, `.ipynb`, 중간 OOF 및 설계 파일은 검토 없이 포함하지 않습니다.
+이번 브랜치에는 위 R residual 개선 실험을 설명하는 README와 실제 Colab 실행 노트북만 추가합니다. 다른 실험용 `.py`, `.ipynb`, 중간 OOF 및 설계 파일은 아직 포함하지 않았습니다.
+정리 후 업로드 예정입니다.
 
