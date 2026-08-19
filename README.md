@@ -44,6 +44,9 @@
 Python 3.11 환경을 권장합니다.
 
 ```bash
+git clone -b JOA https://github.com/calico-cat17/LG-Aimers-9th.git
+cd LG-Aimers-9th
+git lfs pull
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt

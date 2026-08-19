@@ -6,8 +6,11 @@
 - 6 CPU 이상 권장
 - 학습 시 충분한 RAM 권장
 - 최종 추론은 대회 제한인 10분 이내를 목표로 구성
+- 최종 ZIP 다운로드를 위해 Git LFS 필요
 
 ```bash
+git lfs install
+git lfs pull
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
