@@ -1,0 +1,36 @@
+{
+  "version": 3,
+  "prior": 0.5237659811973572,
+  "main_weights": [
+    0.27358084,
+    0.26512224,
+    0.46129691
+  ],
+  "stack_intercept": 0.0300329767,
+  "stack_coefficients": [
+    0.93505266,
+    -0.00520129,
+    0.01091677,
+    -0.02528331
+  ],
+  "adaptive_gate": true,
+  "gate_scale": 1.0,
+  "psych_latent_validation_2024_score": 927.4038,
+  "validation_2024_score": 959.7513,
+  "notes": "Seed-ensembled residual stack (6 seeds per model, 36 models) plus the channel surface optimum. Seed noise measured 0.0061-0.0079 per row; averaging recovers +15.3/+17.5/+24.4 on 2024/2023/2022, against theoretical maxima of 15.0/17.2/24.9. That direction is orthogonal to the channel surface, whose own ceiling is 1104.78.",
+  "channel_weights": {
+    "psych": 0.6782,
+    "split": 0.5098,
+    "film": -0.3057,
+    "minimax": -0.5914,
+    "hier": -0.3688
+  },
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ]
+}
