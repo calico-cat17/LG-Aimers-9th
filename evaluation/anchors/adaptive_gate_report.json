@@ -1,0 +1,42 @@
+{
+  "name": "adaptive_gate",
+  "site_scale_local_score": 1088.5348997065,
+  "site_scale_interval": [
+    1074.492437035627,
+    1102.577362377373
+  ],
+  "raw_total_bss": 697.6414577306577,
+  "raw_total_base_bss": 711.2578986830154,
+  "raw_total_gain": -13.616440952357607,
+  "splits": [
+    {
+      "year": 2023,
+      "candidate_score": 437.0180398052259,
+      "base_score": 474.4551406537956,
+      "gain": -37.437100848569685,
+      "mean_abs_change": 0.0049408532723969585,
+      "mean_change": 0.003859658562071432,
+      "brier_gain": -9.359275143682357e-05,
+      "cluster_ci_low": -0.0001642619987673752,
+      "cluster_ci_high": -3.821519485974061e-05,
+      "ci_pass": false
+    },
+    {
+      "year": 2024,
+      "candidate_score": 912.724886755345,
+      "base_score": 903.2580076189345,
+      "gain": 9.466879136410512,
+      "mean_abs_change": 0.003996487135217435,
+      "mean_change": 0.0008456850439569582,
+      "brier_gain": 2.3648919830481146e-05,
+      "cluster_ci_low": 3.347439993083329e-06,
+      "cluster_ci_high": 4.236204047920412e-05,
+      "ci_pass": true
+    }
+  ],
+  "worst_case_gain": -37.437100848569685,
+  "temporal_gain_gap": 46.9039799849802,
+  "all_cluster_ci_positive": false,
+  "site_model_loo_mae": 9.092192733051164,
+  "upload_gate": "HOLD"
+}

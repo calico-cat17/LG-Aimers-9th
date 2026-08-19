@@ -1,0 +1,25 @@
+submission,site_score,seconds,family,blend_weight,local_2024_score,validation_note
+submit_baseline_smoke.zip,549.5119345223,2.0,baseline,,,official site result
+260810_meta.zip,703.9432300156,10.0,meta,,,random OOF was optimistic; do not calibrate from it
+260810_recent_residual.zip,938.7629293289,6.0,controller_blend,0.0,687.3507570913,public anchor
+260810_pre_controller.zip,947.782448333,8.0,controller_blend,0.15,719.5619054322,public anchor
+260810_momentum_blend.zip,954.6895436059,8.0,controller_blend,0.4,760.6399130144,public anchor
+260811_hierarchical_stack.zip,1070.3471053334,11.0,hierarchical_stack,,903.2578469482,official site result
+260811_adaptive_gate.zip,1088.5348997065,11.0,adaptive_gate,,912.7247260999,official site result
+260811_cross_effects.zip,1075.4820160777,12.0,contextual_prior,,929.3247799028,failed temporal transfer despite higher 2024 local score
+260812_psych.zip,1088.6134074414,,psych_latent_residual,0.4,927.4038,only +0.0785077349 public despite +14.6791 local; no meaningful temporal transfer
+260812_regime_film.zip,1083.3371536583,,psych_regime_film,0.75,917.54241395,local 2024 +4.8175 but public -5.1977 versus adaptive; 2023 cluster CI failed
+260814_minimax.zip,1069.0,,stable_minimax,1.0,927.72711179,local PASS +15.00 but public -19.53 versus adaptive; multi-correction transfer failure
+260814_split_priors.zip,1083.8060672691,,split_priors,1.0,959.7473916901,local +32.34 across 4 base models both seasons; public -4.81 vs psych. gain shrinks ~0.4 per point of base strength
+260814_blend50.zip,1098.3775,,channel_surface,,,exact midpoint of adaptive_gate and split_priors; predicted 1100.04
+260814_channel_opt.zip,1102.8478750556,,channel_surface,,,"five-channel optimum, Q scale pinned on blend50; predicted 1106.86, overshot 4.01"
+260815_channel_cal.zip,1084.7331026532,,channel_calibration,0.75,939.20887818,2023/2024 affine calibration passed temporal bootstrap but public -18.11 versus channel_opt; calibration direction did not transfer
+260814_channel_refit.zip,,,channel_surface,,,"built, not submitted; predicted 1104.78"
+260815_seed_ensemble.zip,1108.9514777544,,seed_ensemble,,,"6-seed ensemble of 3 residual + 3 subtype models on top of the channel optimum; predicted +15~20 from local seed-noise measurement, realised +6.10"
+260815_probeA.zip,868.757552883,,seed_ensemble,,,"calibration probe, +0.03 on every row; inverted to b=-0.0052"
+260815_shifted.zip,1119.2195294312,,seed_ensemble,,,"seed ensemble + measured global shift +0.0052; predicted 1119.0, error +0.22"
+260815_shrink85.zip,1082.343188949,,seed_ensemble,,,"shrink toward measured ybar with lambda 0.85; -36.88 proves beta > 0.925, i.e. no over-dispersion"
+260818_F_expert.zip,1122.2576768019,33.0,game_type_F_expert,1.0,925.2301843731,"R predictions unchanged; row-local F-only expert. 2024 forward +4.4782 over the comparable adaptive structure; new site best +3.0381"
+260818_F_regime.zip,1126.4544105659,,game_type_F_regime,1.0,955.9888875538,"F residual 3-channel + subtype + transition; local +30.76 vs F expert but site only +4.20, incremental transfer ratio 0.150"
+260818_F_regime24.zip,1124.0855434824,68.0,game_type_F_regime_24seed,1.0,,"Residual ensemble expanded from 6 to 24 seeds; public -2.3689 versus F_regime, so capacity-only averaging rejected"
+260818_F_regime125.zip,1124.4083837488,42.0,game_type_F_regime_strength,1.25,,"All F-regime correction strengths multiplied by 1.25; public -2.0460 versus 1.0, proving over-correction"

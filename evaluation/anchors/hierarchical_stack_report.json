@@ -1,0 +1,26 @@
+{
+  "name": "hierarchical_stack",
+  "site_scale_local_score": 1070.3471053334,
+  "site_scale_interval": [
+    1056.304642662527,
+    1084.3895680042729
+  ],
+  "raw_total_bss": 711.2578986830154,
+  "raw_total_base_bss": null,
+  "raw_total_gain": null,
+  "splits": [
+    {
+      "year": 2023,
+      "candidate_score": 474.4551406537956
+    },
+    {
+      "year": 2024,
+      "candidate_score": 903.2580076189345
+    }
+  ],
+  "worst_case_gain": null,
+  "temporal_gain_gap": null,
+  "all_cluster_ci_positive": false,
+  "site_model_loo_mae": 9.092192733051164,
+  "upload_gate": "HOLD"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "cross_effects_2024_only",
+  "site_scale_local_score": 1075.4820160777,
+  "site_scale_interval": [
+    1061.4395534068271,
+    1089.524478748573
+  ],
+  "raw_total_bss": 929.3249405312731,
+  "raw_total_base_bss": 912.724886755345,
+  "raw_total_gain": 16.60005377592813,
+  "splits": [
+    {
+      "year": 2024,
+      "candidate_score": 929.3249405312731,
+      "base_score": 912.724886755345,
+      "gain": 16.60005377592813,
+      "mean_abs_change": 0.005185257722454753,
+      "mean_change": -0.0020590245491457874,
+      "brier_gain": 4.146808417757334e-05,
+      "cluster_ci_low": 6.467946281563198e-06,
+      "cluster_ci_high": 7.747826147503541e-05,
+      "ci_pass": true
+    }
+  ],
+  "worst_case_gain": 16.60005377592813,
+  "temporal_gain_gap": null,
+  "all_cluster_ci_positive": true,
+  "site_model_loo_mae": 9.092192733051164,
+  "upload_gate": "HOLD"
+}

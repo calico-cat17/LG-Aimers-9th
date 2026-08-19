@@ -1,28 +1,24 @@
-# 대회 제공 데이터 (절대 커밋 금지)
-train.csv
-test.csv
-trackman_history.csv
-sample_submission.csv
-*.csv.zip
-data/
+__pycache__/
+*.py[cod]
+.venv*/
+trainenv*/
+.pytest_cache/
 
-# 대회 baseline (읽기 전용 원본, 저장소에 포함하지 않음)
+# 공식 대회 데이터는 저장소에 포함하지 않는다.
+data/
+open.zip
 baseline_submit/
 
-# 학습된 모델 바이너리 (용량 크고 재현 가능 - 코드로 재생성)
-*.pkl
-*.cbm
-*.npz
-*.joblib
-
-# 학습 산출물 로그
+# 실행 산출물
+output/
+run_final/
 catboost_info/
-__pycache__/
-*.pyc
+*.tmp
 
-# 대용량 결과물 zip
-*.zip
+# 모델과 중간 결과는 기본적으로 제외한다. 공개 최종 ZIP만 Git LFS로 추적한다.
+model/
+model_*/
+*.cbm
+*.pt
+*.pkl
 
-# OS/편집기
-.DS_Store
-.vscode/

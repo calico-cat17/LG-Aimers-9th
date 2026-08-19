@@ -1,0 +1,42 @@
+{
+  "name": "psych_regime_film",
+  "site_scale_local_score": 1083.3371536583,
+  "site_scale_interval": [
+    1069.294690987427,
+    1097.379616329173
+  ],
+  "raw_total_bss": 700.5845982172355,
+  "raw_total_base_bss": 697.6414577306577,
+  "raw_total_gain": 2.943140486577704,
+  "splits": [
+    {
+      "year": 2023,
+      "candidate_score": 438.0284995898154,
+      "base_score": 437.0180398052259,
+      "gain": 1.0104597845895,
+      "mean_abs_change": 0.0005937205279145468,
+      "mean_change": 0.00046618948255353824,
+      "brier_gain": 2.526149443033532e-06,
+      "cluster_ci_low": -5.7544573283336276e-06,
+      "cluster_ci_high": 1.0043232155296935e-05,
+      "ci_pass": false
+    },
+    {
+      "year": 2024,
+      "candidate_score": 917.5424139542532,
+      "base_score": 912.724886755345,
+      "gain": 4.8175271989082376,
+      "mean_abs_change": 0.0007655694249430755,
+      "mean_change": -0.00018323904438216225,
+      "brier_gain": 1.2034516641287643e-05,
+      "cluster_ci_low": 2.794524371296347e-06,
+      "cluster_ci_high": 2.1729755702051847e-05,
+      "ci_pass": true
+    }
+  ],
+  "worst_case_gain": 1.0104597845895,
+  "temporal_gain_gap": 3.8070674143187375,
+  "all_cluster_ci_positive": false,
+  "site_model_loo_mae": 9.092192733051164,
+  "upload_gate": "HOLD"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "psych_latent",
+  "site_scale_local_score": 1088.6134074414,
+  "site_scale_interval": [
+    1074.5709447705271,
+    1102.655870112273
+  ],
+  "raw_total_bss": 718.1931957040422,
+  "raw_total_base_bss": 697.6414577306577,
+  "raw_total_gain": 20.551737973384434,
+  "splits": [
+    {
+      "year": 2023,
+      "candidate_score": 463.63670201697846,
+      "base_score": 437.0180398052259,
+      "gain": 26.618662211752564,
+      "mean_abs_change": 0.0031044994823275973,
+      "mean_change": 0.00030653282106709147,
+      "brier_gain": 6.65466550425716e-05,
+      "cluster_ci_low": 3.878693761787912e-05,
+      "cluster_ci_high": 9.511036502993575e-05,
+      "ci_pass": true
+    },
+    {
+      "year": 2024,
+      "candidate_score": 927.4039512174647,
+      "base_score": 912.724886755345,
+      "gain": 14.679064462119754,
+      "mean_abs_change": 0.0045656562078473925,
+      "mean_change": 3.934534354207021e-05,
+      "brier_gain": 3.666931980951188e-05,
+      "cluster_ci_low": 9.260629578688407e-06,
+      "cluster_ci_high": 7.162412331786753e-05,
+      "ci_pass": true
+    }
+  ],
+  "worst_case_gain": 14.679064462119754,
+  "temporal_gain_gap": 11.93959774963281,
+  "all_cluster_ci_positive": true,
+  "site_model_loo_mae": 9.092192733051164,
+  "upload_gate": "HOLD"
+}

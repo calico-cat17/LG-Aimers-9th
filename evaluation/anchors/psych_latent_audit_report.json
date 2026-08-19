@@ -1,0 +1,42 @@
+{
+  "name": "psych_latent_audit",
+  "splits": [
+    {
+      "year": 2023,
+      "candidate_score": 463.63670201697846,
+      "base_score": 437.0180398052259,
+      "gain": 26.618662211752564,
+      "mean_abs_change": 0.0031044994823275973,
+      "mean_change": 0.00030653282106709147,
+      "brier_gain": 6.65466550425716e-05,
+      "cluster_ci_low": 3.878693761787912e-05,
+      "cluster_ci_high": 9.540309834494296e-05,
+      "ci_pass": true
+    },
+    {
+      "year": 2024,
+      "candidate_score": 927.4039512174647,
+      "base_score": 912.724886755345,
+      "gain": 14.679064462119754,
+      "mean_abs_change": 0.0045656562078473925,
+      "mean_change": 3.934534354207021e-05,
+      "brier_gain": 3.666931980951188e-05,
+      "cluster_ci_low": 1.0918241757884783e-05,
+      "cluster_ci_high": 7.211801685599983e-05,
+      "ci_pass": true
+    }
+  ],
+  "total_local_score": 718.1931957040422,
+  "total_base_score": 697.6414577306577,
+  "total_local_gain": 20.551737973384434,
+  "worst_case_gain": 14.679064462119754,
+  "temporal_gain_gap": 11.93959774963281,
+  "all_cluster_ci_positive": true,
+  "leaderboard_estimate_low_confidence": 1086.3783208496172,
+  "leaderboard_interval": [
+    1066.2395824982664,
+    1106.517059200968
+  ],
+  "site_model_loo_mae": 11.063061263744885,
+  "upload_gate": "HOLD"
+}
