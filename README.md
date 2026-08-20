@@ -58,8 +58,6 @@ R: p_final = clip(p_JOA + 0.075 × mean(correction_seed17, correction_seed42, co
 - 제출 패키지 manifest: `reports/r_scale_sweep/submission_manifest.csv`
 - 공식 제출 이력: `evaluation/leaderboard_history.csv`
 
-Colab 실행에는 비공개 대회 데이터와 JOA anchor·OOF·Candidate4 artifact가 별도로 필요합니다. 이 데이터와 중간 artifact는 Git에 포함하지 않습니다.
-
 ## 최종 제출물
 
 현재 유지 제출물은 다음 파일입니다.
@@ -83,4 +81,4 @@ Size: 280264527 bytes
 - 각 테스트 행과 학습 단계에서 저장한 artifact만으로 독립적으로 예측합니다.
 - F 행의 예측은 JOA F-Regime075 anchor와 동일하게 유지합니다.
 
-자세한 실행 방법은 [`docs/REPRODUCE.md`](docs/REPRODUCE.md)를 참고하세요.
+자세한 실행 방법은 [`docs/REPRODUCE.md`](docs/REPRODUCE.md)를 참고하시면 됩니다.
