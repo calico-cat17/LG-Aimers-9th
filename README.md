@@ -1,6 +1,7 @@
 # LG Aimers 9기 — JM R Residual 개선 모델
 
-JOA의 `F-Regime075` 제출 모델을 anchor로 유지하면서, `game_type == "R"`인 행에만 CatBoost residual correction을 추가한 실험입니다. 최종 학습·검증·제출 ZIP 생성은 **Google Colab에서 수행**했습니다.
+JOA의 `F-Regime075` 제출 모델을 anchor로 유지하면서, `game_type == "R"`인 행에만 CatBoost residual correction을 추가한 실험입니다. 
+최종 학습·검증·제출 ZIP 생성은 현재 가용한 GPU가 남아있지 않아, **Google Colab에서 수행**했습니다.
 
 ## 공식 결과
 
