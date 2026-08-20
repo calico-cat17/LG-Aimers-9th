@@ -2,9 +2,11 @@
 
 ## 현재 유지 제출
 
-- `submissions/260818_F_regime075.zip`
-  - 기존 F-regime의 퓨처스리그 전용 residual·실패유형·transition 보정 강도를 0.75배로 완화한 제출.
-  - 최상위 작업 폴더에는 이 ZIP과 대응 추론 패키지 `submission_f_regime075/`만 유지한다.
+- `final/sub_JM_R_res_scale075_RE.zip`
+  - `260818_F_regime075.zip`의 F 예측을 고정하고 `game_type == "R"`인 행에만 3-seed CatBoost residual correction을 적용한다.
+  - correction scale은 `0.075`이며 공식 리더보드 점수는 `1127.8851982941`이다.
+  - 저장소에는 root-level 구조로 정리한 재패키징본을 Git LFS로 보존한다.
+  - SHA-256: `46aa2a15130ed9ba8d302f203fa42c8e3f1730ace5d47b3d4ef80429ae2b053f`
 
 ## 리더보드 제출 기록
 
@@ -26,7 +28,24 @@
 | `260818_F_regime.zip` | F residual 3채널·실패유형·transition 결합 | 1126.4544 | 이전 최고 |
 | `260818_F_regime24.zip` | residual ensemble을 24 seed로 확대 | 1124.0855 | 폐기 |
 | `260818_F_regime125.zip` | F 보정 강도를 1.25배로 확대 | 1124.4084 | 과보정 |
-| `260818_F_regime075.zip` | F 보정 강도를 0.75배로 완화 | 사용자 지정 현재 유지본 | 유지 |
+| `260818_F_regime075.zip` | F 보정 강도를 0.75배로 완화한 R-residual anchor | 1126.8664 | 기준 anchor |
+| `sub_JM_R_res_multiseed005.zip` | R 행에만 3-seed residual correction을 0.05배 적용 | 1127.5514 | 중간 최고 |
+| `sub_JM_R_res_scale075.zip` | scale sweep에서 선택한 R correction 0.075 적용 | 1127.8852 | 새 최고 |
+| `sub_JM_R_res_scale075_RE.zip` | scale075 제출물을 root-level ZIP으로 재패키징 | 1127.8852 | 현재 유지본 |
+
+## R residual correction scale sweep
+
+`260818_F_regime075.zip`을 고정 anchor로 사용하고 F 행의 예측은 변경하지 않았다. R 행에 대해서만 seed `17`, `42`, `777`의 CatBoost residual correction 평균을 적용했으며, correction scale을 `0.000`부터 `0.150`까지 `0.005` 간격으로 비교했다.
+
+| Scale | 2024 forward BSS | Anchor 대비 ΔBSS | Bootstrap 95% CI | P(ΔBSS > 0) | 공식 점수 |
+|---:|---:|---:|---:|---:|---:|
+| 0.050 | 899.4424 | +1.7446 | [-0.6586, 4.1840] | 92.23% | 1127.5514 |
+| 0.075 | 899.8907 | +2.1928 | [-1.4346, 5.8776] | 88.60% | **1127.8852** |
+| 0.100 | 900.0562 | +2.3583 | [-2.5131, 7.2879] | 83.57% | 미제출 |
+
+로컬 BSS만 보면 `0.100`이 가장 높지만 scale이 증가할수록 bootstrap 불확실성이 커지고 양의 개선 확률이 낮아졌다. 따라서 `0.050`보다 correction을 강화하면서도 `0.100`의 높은 분산을 피하는 절충점으로 `0.075`를 선택했다.
+
+공식 리더보드에서 `0.075`는 F-Regime075 anchor보다 `+1.0187979238`, 기존 `0.050` 제출보다 `+0.3337797264` 높은 점수를 기록했다. `scale_curve_2024.csv`의 leaderboard projection은 형상 비교를 위한 참고치이며 실제 공식 점수와 동일한 값으로 해석하지 않는다.
 
 ## ZIP 없이 검증 후 폐기한 주요 방향
 
