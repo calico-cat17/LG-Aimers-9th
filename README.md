@@ -1,7 +1,12 @@
-# LG Aimers 9기 — JM R Residual 개선 모델
+# LG Aimers 9기 — JM R Residual 개선 모델 (+ JY 팀모델 잔차보정 추가)
 
 JOA의 `F-Regime075` 제출 모델을 anchor로 유지하면서, `game_type == "R"`인 행에만 CatBoost residual correction을 추가한 실험입니다. 
 최종 학습·검증·제출 ZIP 생성은 현재 가용한 GPU가 남아있지 않아, **Google Colab에서 수행**했습니다.
+
+**[JY 추가]** 같은 anchor+R행 전용 잔차보정 구조를, JM의 Candidate4 피처
+대신 **JY 자신의 팀모델(XGBoost+LightGBM+CatBoost 15-seed 앙상블) 예측값**을
+입력 신호로 써서 독립적으로 재현 — 실측 **1130.3604943627**로 anchor 대비
++3.49, JM 버전 대비도 +2.48 개선. 상세는 아래 "JY 팀모델 잔차보정" 절 참고.
 
 ## 공식 결과
 
@@ -9,9 +14,10 @@ JOA의 `F-Regime075` 제출 모델을 anchor로 유지하면서, `game_type == "
 |---|---:|---:|
 | JOA `260818_F_regime075.zip` | 1126.8664003703 | - |
 | JM R Residual Multi-seed × 0.05 | 1127.5514185677 | +0.6850181974 |
-| **JM R Residual Multi-seed × 0.075** | **1127.8851982941** | **+0.3337797264** |
+| JM R Residual Multi-seed × 0.075 | 1127.8851982941 | +0.3337797264 |
+| **JY 팀모델 R Residual × 0.15** | **1130.3604943627** | **+2.4752960686(JM 대비) / +3.4940939924(anchor 대비)** |
 
-최종 0.075 모델은 anchor 대비 `+1.0187979238`, 기존 0.05 제출 대비 `+0.3337797264` 개선됐습니다.
+JM 최종 0.075 모델은 anchor 대비 `+1.0187979238`, JY 팀모델 버전은 anchor 대비 `+3.4940939924`로 이 시점 팀 전체 최고 기록입니다.
 
 ## 모델 구성
 
@@ -48,6 +54,47 @@ R: p_final = clip(p_JOA + 0.075 × mean(correction_seed17, correction_seed42, co
 | 0.100 | 900.0562 | +2.3583 | [-2.5131, 7.2879] | 83.57% | 미제출 |
 
 0.100은 로컬 점수가 더 높았지만 불확실성도 커졌습니다. 0.075는 0.05보다 correction을 강화하면서 0.10의 높은 분산을 피하는 절충 후보로 선택했고, 공식 리더보드에서도 개선 방향이 재현됐습니다.
+
+## JY 팀모델 잔차보정 (2026-08-22 추가)
+
+JM의 구조(anchor + R행 전용 잔차보정)와 동일한 아키텍처를, 입력 신호만
+**JY 팀의 자체 모델(XGBoost/LightGBM/CatBoost 5-seed씩 15개 앙상블,
+`hierarchical_base` 계층적 축소 + 잔차학습 구조)의 예측값**으로 바꿔서
+독립적으로 재현했습니다. JM의 Candidate4(ExtraTrees/Beta) 피처를 그대로
+베끼지 않고, 서로 다른 팀원이 각자의 모델을 같은 구조에 꽂아본 것입니다.
+
+```text
+JOA F-Regime075 anchor probability
+        │
+        ├─ game_type == F → anchor 예측 유지
+        │
+        └─ game_type == R
+             └─ JY 팀모델(15-seed 앙상블) 예측값 1개를 입력으로 하는
+                CatBoost residual model (depth=4, iterations=150)
+                         │
+                         └─ correction × 0.15 → 최종 확률
+```
+
+```text
+F: p_final = p_JOA
+R: p_final = clip(p_JOA + 0.15 × residual_model.predict(JY_팀모델_예측값))
+```
+
+**0.15 선택 근거**: season별(2022/2023/2024) forward OOS + **pitcher-cluster
+부트스트랩 CI**(행이 아니라 투수 단위로 리샘플링 — 같은 투수의 여러 투구는
+독립이 아니므로 이 방식이 더 보수적/정직한 CI)로 scale 0.10~0.30을
+스윕한 결과, 0.10~0.15 구간에서 2022·2024 둘 다 cluster CI가 완전히
+양수(통계적으로 유의미)였고 2023은 중립(손해 없음) — scale 0.20 이상은
+CI가 다시 0을 포함하며 과잉보정 조짐을 보여 0.15를 채택했습니다.
+
+**실측 검증**: 로컬 예측(scale 0.15, 시즌별 delta 평균 +4.52)과 실제
+제출 결과(anchor 대비 +3.49)가 방향·크기 모두 일치했습니다.
+
+**최종 제출물**: `final/sub_JY_team_residual_scale015.zip`
+```text
+SHA-256: 990b6441d03bc31cd1a9fe93ab0716cc12efacd15da2f024b1e059760dc6799d
+Size: 233573022 bytes
+```
 
 ## Colab 및 검증 자료
 
