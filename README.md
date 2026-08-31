@@ -1,96 +1,84 @@
-# LG Aimers 9기 — JOA 실험 및 최종 재현 코드
+# LG Aimers 9기 — JM R Residual 개선 모델
 
-투구 직전까지 확인 가능한 정보로 `control_success` 확률을 예측한 프로젝트입니다.
-평가는 Brier Skill Score를 사용합니다.
+JOA의 `F-Regime075` 제출 모델을 anchor로 유지하면서, `game_type == "R"`인 행에만 CatBoost residual correction을 추가한 실험입니다. 
+최종 학습·검증·제출 ZIP 생성은 현재 가용한 GPU가 남아있지 않아, **Google Colab에서 수행**했습니다.
 
-이 브랜치는 다음 세 가지를 한 번에 공개합니다.
+## 공식 결과
 
-1. 지금까지 수행한 실험과 채택·폐기 결과
-2. 현재 선택한 `F_regime075`의 학습 코드, 추론 코드, 제출 ZIP
-3. 실제 사용한 2022·2023·2024 forward local 평가 체계
+| 모델 | Public BSS | 직전 대비 |
+|---|---:|---:|
+| JOA `260818_F_regime075.zip` | 1126.8664003703 | - |
+| JM R Residual Multi-seed × 0.05 | 1127.5514185677 | +0.6850181974 |
+| **JM R Residual Multi-seed × 0.075** | **1127.8851982941** | **+0.3337797264** |
 
-## 핵심 결과
+최종 0.075 모델은 anchor 대비 `+1.0187979238`, 기존 0.05 제출 대비 `+0.3337797264` 개선됐습니다.
 
-| 모델 | Public BSS | 설명 |
-|---|---:|---|
-| Adaptive Gate | 1088.5349 | 계층 baseline 위 상황별 residual gate |
-| Seed Ensemble + Shift | 1119.2195 | 6-seed 평균과 전역 calibration |
-| F Expert | 1122.2577 | Futures 행 전용 residual 전문가 |
-| F Regime | 1126.4544 | F residual 3채널·실패유형·transition 결합 |
-| **F Regime 0.75** | **최종 선택본** | F 보정 강도를 0.75로 완화한 최종 제출 패키지 |
-
-전체 기록은 [archive/EXPERIMENTS.md](archive/EXPERIMENTS.md)와
-[archive/experiment_log.csv](archive/experiment_log.csv)에 있습니다.
-
-## 저장소 구조
+## 모델 구성
 
 ```text
-├── final/
-│   ├── 260818_F_regime075.zip   # 동일 예측을 내는 최종 제출물(Git LFS)
-│   ├── inference/               # 압축을 풀지 않고도 볼 수 있는 추론 소스
-│   └── training/                # 최종 F-regime 학습 단계
-├── src/                         # 전처리, feature, gate, 보조 target 모듈
-├── evaluation/                  # local 평가기, LB 환산기, forward OOF
-├── archive/experiments/         # 지금까지 수행한 전체 실험·학습 코드
-├── docs/
-│   ├── MODEL.md                 # 최종 모델 구조
-│   ├── REPRODUCE.md             # 설치부터 학습·평가·추론까지
-│   └── data_description.md      # 공식 데이터 설명
-└── requirements.txt
+JOA F-Regime075 anchor probability
+        │
+        ├─ game_type == F → anchor 예측 유지
+        │
+        └─ game_type == R
+             ├─ time-safe 공통 피처
+             ├─ Candidate4 ExtraTrees/Beta/raw 메타 피처
+             ├─ CatBoost residual model: seed 17
+             ├─ CatBoost residual model: seed 42
+             └─ CatBoost residual model: seed 777
+                         │
+                         └─ 평균 correction × 0.075 → 최종 확률
 ```
 
-## 빠른 재현
-
-Python 3.11 환경을 권장합니다.
-
-```bash
-git clone -b JOA https://github.com/calico-cat17/LG-Aimers-9th.git
-cd LG-Aimers-9th
-git lfs pull
-python3.11 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-대회에서 받은 파일을 다음과 같이 배치합니다.
+Residual target은 `control_success - JOA anchor probability`입니다. 세 seed의 correction을 산술평균하고 안전 범위로 제한한 뒤 R 행에만 적용합니다.
 
 ```text
-data/
-├── train.csv
-├── test.csv
-├── trackman_history.csv
-└── sample_submission.csv
+F: p_final = p_JOA
+R: p_final = clip(p_JOA + 0.075 × mean(correction_seed17, correction_seed42, correction_seed777))
 ```
 
-정확한 최종 제출물의 추론:
+## 0.075 선택 근거
 
-```bash
-unzip final/260818_F_regime075.zip -d run_final
-cp -r data run_final/data
-cd run_final
-python script.py
+2024 forward OOF에서 correction scale을 `0.000`부터 `0.150`까지 `0.005` 간격으로 비교했습니다.
+
+| Scale | 2024 BSS | Anchor 대비 ΔBSS | Bootstrap 95% CI | P(ΔBSS > 0) | 공식 점수 |
+|---:|---:|---:|---:|---:|---:|
+| 0.050 | 899.4424 | +1.7446 | [-0.6586, 4.1840] | 92.23% | 1127.5514 |
+| **0.075** | **899.8907** | **+2.1928** | **[-1.4346, 5.8776]** | **88.60%** | **1127.8852** |
+| 0.100 | 900.0562 | +2.3583 | [-2.5131, 7.2879] | 83.57% | 미제출 |
+
+0.100은 로컬 점수가 더 높았지만 불확실성도 커졌습니다. 0.075는 0.05보다 correction을 강화하면서 0.10의 높은 분산을 피하는 절충 후보로 선택했고, 공식 리더보드에서도 개선 방향이 재현됐습니다.
+
+## Colab 및 검증 자료
+
+- 최종 residual 학습·패키징: `notebooks/LG_AIMERS_JOA_R_Residual_Final_Trainer_Colab.ipynb`
+- correction scale 탐색: `notebooks/LG_AIMERS_JOA_R_Scale_Sweep_Colab.ipynb`
+- scale별 검증 결과: `reports/r_scale_sweep/scale_curve_2024.csv`
+- 후보 요약: `reports/r_scale_sweep/scale_candidate_summary.csv`
+- 제출 패키지 manifest: `reports/r_scale_sweep/submission_manifest.csv`
+- 공식 제출 이력: `evaluation/leaderboard_history.csv`
+
+## 최종 제출물
+
+현재 유지 제출물은 다음 파일입니다.
+
+```text
+final/sub_JM_R_res_scale075_RE.zip
 ```
 
-결과는 `run_final/output/submission.csv`에 생성됩니다. 대회 원본 데이터는 저장소에
-포함하지 않습니다.
+`_RE` 파일은 대회 코드 제출 형식에 맞게 최상위 구조를 정리한 재패키징본이며 예측 로직은 scale 0.075 제출과 동일합니다. 대용량 파일은 Git LFS로 관리합니다.
 
-로컬 평가:
-
-```bash
-python evaluation/evaluate_local_v2.py \
-  evaluation/anchors/psych_latent.npz \
-  --name psych_latent --verbose
+```text
+SHA-256: 46aa2a15130ed9ba8d302f203fa42c8e3f1730ace5d47b3d4ef80429ae2b053f
+Size: 280264527 bytes
 ```
 
-후보 NPZ 형식과 평가 기준은 [evaluation/CANDIDATE_FORMAT.md](evaluation/CANDIDATE_FORMAT.md)를
-참고하세요.
+## 독립 예측 원칙
 
-## 검증 원칙
+- 검증 연도보다 과거 데이터만 학습에 사용하는 forward OOF 방식을 사용했습니다.
+- 평가 데이터의 정답이나 테스트 전체 분포를 사용하지 않습니다.
+- 테스트 행 간 rolling·누적 집계를 생성하지 않습니다.
+- 각 테스트 행과 학습 단계에서 저장한 artifact만으로 독립적으로 예측합니다.
+- F 행의 예측은 JOA F-Regime075 anchor와 동일하게 유지합니다.
 
-- 2019~`t-1` 학습 → `t` 예측 방식으로 2022·2023·2024를 검증합니다.
-- 세 연도 모두 개선되지 않는 후보는 채택하지 않습니다.
-- Test의 다른 행, Test 전체 분포, Test 내부 rolling·누적 집계는 사용하지 않습니다.
-- Train에서 만든 snapshot·통계·보조 target만 추론 자산으로 사용합니다.
-- 최종 ZIP은 행 단독·부분집합·shuffle 입력에서 동일한 예측을 내는지 검사했습니다.
-
-상세 재현 절차는 [docs/REPRODUCE.md](docs/REPRODUCE.md)에 있습니다.
+자세한 실행 방법은 [`docs/REPRODUCE.md`](docs/REPRODUCE.md)를 참고하시면 됩니다.

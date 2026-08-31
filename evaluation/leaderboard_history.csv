@@ -23,3 +23,7 @@ submit_baseline_smoke.zip,549.5119345223,2.0,baseline,,,official site result
 260818_F_regime.zip,1126.4544105659,,game_type_F_regime,1.0,955.9888875538,"F residual 3-channel + subtype + transition; local +30.76 vs F expert but site only +4.20, incremental transfer ratio 0.150"
 260818_F_regime24.zip,1124.0855434824,68.0,game_type_F_regime_24seed,1.0,,"Residual ensemble expanded from 6 to 24 seeds; public -2.3689 versus F_regime, so capacity-only averaging rejected"
 260818_F_regime125.zip,1124.4083837488,42.0,game_type_F_regime_strength,1.25,,"All F-regime correction strengths multiplied by 1.25; public -2.0460 versus 1.0, proving over-correction"
+260818_F_regime075.zip,1126.8664003703,,game_type_F_regime_strength,0.75,897.6978760835142,JOA F-Regime075 anchor; retained as the fixed base prediction for the JM R-only residual experiments
+sub_JM_R_res_multiseed005.zip,1127.5514185677,,game_type_R_residual_multiseed,0.05,899.4424425677106,Three-seed CatBoost residual correction applied only to R rows; F rows remain identical to the F-Regime075 anchor
+sub_JM_R_res_scale075.zip,1127.8851982941,,game_type_R_residual_multiseed,0.075,899.8906635416026,Scale-sweep candidate selected between the safer 0.05 setting and the higher-variance 0.10 setting; new official best
+sub_JM_R_res_scale075_RE.zip,1127.8851982941,,game_type_R_residual_multiseed,0.075,899.8906635416026,Clean root-level repackaging of the scale075 submission; same official score as the original scale075 package
