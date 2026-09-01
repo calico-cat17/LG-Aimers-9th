@@ -6,6 +6,8 @@ submit_baseline_smoke.zip,549.5119345223,2.0,baseline,,,official site result
 260810_momentum_blend.zip,954.6895436059,8.0,controller_blend,0.4,760.6399130144,public anchor
 260811_hierarchical_stack.zip,1070.3471053334,11.0,hierarchical_stack,,903.2578469482,official site result
 260811_adaptive_gate.zip,1088.5348997065,11.0,adaptive_gate,,912.7247260999,official site result
+260811_adaptive_gate_new.zip,938.7629293289,5.0,adaptive_gate_rebuild,,,"submission ID 43921 at 2026-08-11 23:43:38; incorrect rebuild"
+260811_adaptive_gate_new.zip,938.7629293289,6.0,adaptive_gate_rebuild,,,"submission ID 43970 at 2026-08-11 23:59:34; duplicate incorrect rebuild"
 260811_cross_effects.zip,1075.4820160777,12.0,contextual_prior,,929.3247799028,failed temporal transfer despite higher 2024 local score
 260812_psych.zip,1088.6134074414,,psych_latent_residual,0.4,927.4038,only +0.0785077349 public despite +14.6791 local; no meaningful temporal transfer
 260812_regime_film.zip,1083.3371536583,,psych_regime_film,0.75,917.54241395,local 2024 +4.8175 but public -5.1977 versus adaptive; 2023 cluster CI failed
@@ -23,3 +25,19 @@ submit_baseline_smoke.zip,549.5119345223,2.0,baseline,,,official site result
 260818_F_regime.zip,1126.4544105659,,game_type_F_regime,1.0,955.9888875538,"F residual 3-channel + subtype + transition; local +30.76 vs F expert but site only +4.20, incremental transfer ratio 0.150"
 260818_F_regime24.zip,1124.0855434824,68.0,game_type_F_regime_24seed,1.0,,"Residual ensemble expanded from 6 to 24 seeds; public -2.3689 versus F_regime, so capacity-only averaging rejected"
 260818_F_regime125.zip,1124.4083837488,42.0,game_type_F_regime_strength,1.25,,"All F-regime correction strengths multiplied by 1.25; public -2.0460 versus 1.0, proving over-correction"
+260818_F_regime075.zip,1126.8664003703,,game_type_F_regime_strength,0.75,897.6978760835142,"JOA F-Regime075 anchor used by the JM R-only residual experiments"
+sub_JM_R_res_multiseed005.zip,1127.5514185677,,game_type_R_residual_multiseed,0.05,899.4424425677106,"Three-seed train-only CatBoost residual correction applied only to R rows"
+sub_JM_R_res_scale075.zip,1127.8851982941,,game_type_R_residual_multiseed,0.075,899.8906635416026,"JM branch official best; F rows unchanged and R residual scale fixed at 0.075"
+sub_JY_team_residual_scale015.zip,1130.3604943627,,game_type_R_team_model_residual,0.15,889.1788,"JY model; local value is the exact 15-seed strict-forward proxy"
+260823_dual20.zip,1135.55138,,command_token_dual,0.20,900.8074,"R-only 3-seed command signature + 4-member group-token neural; exact 15-seed local proxy +11.6286 transferred to site +5.1909"
+260824_attack1174.zip,1130.6527470838,,residual_of_stack_attack,1.0,988.0583196414536,"Nine deployable residual-of-stack channels; local affine +9.61 over stability base but public -4.90 versus dual20, so local-to-site transfer failed"
+260824_blend54.zip,1131.8057822642,77.0,submission_blend,0.54,,"submitted at 2026-08-24 11:34:29"
+260825_widehedge.zip,1095.3684083645,382.0,cross_submission_affine,1.05,2850.4,"Actual result; predicted 1233.8-1374.9 failed. Cross-direction covariance scale is invalid for candidate scoring; related affine candidates withdrawn"
+submit_JM1_RobustTensorEB_pitcher_floor025_DACON.zip,1148.7730692448,,robust_tensor_eb_pitcher_gate,0.25,,"Actual leaderboard team best documented in GitHub Issue #5; artifact and generator are not yet present locally, so score is an actual reference only"
+submit_tensor_eb.zip,1143.9662567804,50.0,jy_gap_pocket_tensor_eb,0.40,,"JY Issue #6: ungated Tensor-EB on gap+pocket anchor; three-season local PASS"
+submit_tensor_eb_gated.zip,1142.2924742308,50.0,jy_gap_pocket_tensor_eb_gated,0.55,,"JY Issue #6: gate and reduced training window hurt versus ungated correction"
+submit_tensor_eb_scale055.zip,1146.3951679357,51.0,jy_gap_pocket_tensor_eb,0.55,,"JY Issue #6: ungated full-train Tensor-EB; actual improvement over scale 0.40"
+submit_tensor_eb_scale058.zip,1146.7783483062,51.0,jy_gap_pocket_tensor_eb,0.58,,"JY Issue #6: ungated full-train Tensor-EB; best JY Tensor scale result supplied by user"
+submit_tensor_eb_alphaopt.zip,1146.2279739149,51.0,jy_gap_pocket_tensor_eb_alphaopt,,,"JY Issue #6 alpha coordinate search; lower than fixed-alpha scale 0.58"
+260826_tensorEB_attack.zip,1123.4081657324,67.0,incorrect_dual20_tensor_reconstruction,,,"Wrong anchor reconstruction; Tensor-EB was applied to dual20 instead of JM/JY anchor; permanently rejected"
+260826_fit1175.zip,1121.1841469139,402.0,leaderboard_fitted_affine,,,"Leaderboard-fitted covariance model failed and has probing provenance risk; permanently rejected"
